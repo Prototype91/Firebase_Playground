@@ -43,29 +43,25 @@ function onSelectFile(event) {
 
     storageRef.child(`images/${file.name}`).put(file);
 
-    const uploadTask = storageRef.child('images/mountains.jpg').put(file);
-    uploadTask.pause();
-    uploadTask.resume();
-    uploadTask.cancel();
+    const uploadTask = storageRef.child('photos/' + file.name).put(file);
 
     uploadTask.on('state_changed', onStateChanged, onError, onComplete);
-    
+
     function onStateChanged(snapshot) {
         snapshot.state;            // 'paused' ou 'running'
         snapshot.bytesTransferred; // nb d'octets déjà téléchargés
         snapshot.totalBytes;      // taille totale du fichier en octets
+
+        updateProgressBar((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
     }
     function onError(error) {
         console.error('Oops…', error);
+        cancelProgressBar();
     }
     function onComplete() {
         console.log('File uploaded!');
+        successProgressBar();
     }
-
-
-
-
-
 
     /*
         Une fois le code du chargement écrit,
@@ -76,13 +72,20 @@ function onSelectFile(event) {
     // Quand le visiteur clique sur "pause"
     function onPause() {
         // Votre code ici ...
+        playPauseProgressBar();
+        uploadTask.pause();
     }
     // Quand le visiteur clique sur "reprendre"
     function onResume() {
         // Votre code ici ...
+        playPauseProgressBar();
+        uploadTask.resume();
+        
     }
     // Quand le visiteur clique sur "annuler"
     function onCancel() {
         // Votre code ici ...
+        cancelProgressBar();
+        uploadTask.cancel();
     }
 }

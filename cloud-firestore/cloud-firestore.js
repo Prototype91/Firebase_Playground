@@ -1,5 +1,6 @@
 import config from '../config.js';
 
+
 // Initialisation de Firebase
 firebase.initializeApp(config);
 
@@ -54,4 +55,17 @@ jeuxRef.get().then(function (gameQuerySnapshot) {
 
     $('#jeux').html(template);
 
+});
+
+// Retrieve Firebase Messaging object.
+const messaging = firebase.messaging();
+
+messaging.usePublicVapidKey("BLfAFKr4T5RvJ1kBaiejCe_3nfXQDunY86VG-GYT7p55ciLeCqkr8K-whURrZAj_5WJtv00BiFjW1BxbVvfEAHM");
+
+messaging.requestPermission().then(function () {
+    console.log('Notification permission granted.');
+    // TODO(developer): Retrieve an Instance ID token for use with FCM.
+    // ...
+}).catch(function (err) {
+    console.log('Unable to get permission to notify.', err);
 });
