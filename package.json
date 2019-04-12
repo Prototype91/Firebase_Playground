@@ -1,0 +1,14 @@
+{
+  "name": "firebase-playground",
+  "version": "1.0.0",
+  "description": "Un terrain de jeu pour les fonctionnalités de Firebase",
+  "main": "scripts/index.js",
+  "scripts": {
+    "start": "live-server --port=1337 --browser=chrome"
+  },
+  "author": "Dylan Lecomte <lecomtedylan@rocketmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.1"
+  }
+}
